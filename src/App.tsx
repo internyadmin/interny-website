@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
@@ -7,40 +8,34 @@ import { AcademiesPage } from './pages/AcademiesPage';
 import { StudentsPage } from './pages/StudentsPage';
 import { AboutPage } from './pages/AboutPage';
 
-export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+// Scroll to top component
+function ScrollToTop() {
+  const { pathname } = useLocation();
 
-  // Scroll to top on page change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentPage]);
+  }, [pathname]);
 
-  const handleNavigate = (page: string) => {
-    setCurrentPage(page);
-  };
+  return null;
+}
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <HomePage onNavigate={handleNavigate} />;
-      case 'businesses':
-        return <BusinessesPage />;
-      case 'academies':
-        return <AcademiesPage />;
-      case 'students':
-        return <StudentsPage />;
-      case 'about':
-        return <AboutPage />;
-      default:
-        return <HomePage onNavigate={handleNavigate} />;
-    }
-  };
-
+export default function App() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header currentPage={currentPage} onNavigate={handleNavigate} />
-      <main className="flex-grow">{renderPage()}</main>
-      <Footer onNavigate={handleNavigate} />
-    </div>
+    <Router>
+      <ScrollToTop />
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/businesses" element={<BusinessesPage />} />
+            <Route path="/academies" element={<AcademiesPage />} />
+            <Route path="/students" element={<StudentsPage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }

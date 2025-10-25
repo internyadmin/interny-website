@@ -65,7 +65,7 @@ export function PartnersCarousel() {
         }
         
         .animate-scroll {
-          animation: scroll 30s linear infinite;
+          animation: scroll 20s linear infinite;
         }
         
         .animate-scroll:hover {
