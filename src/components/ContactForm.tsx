@@ -1,9 +1,13 @@
+// src/components/ContactForm.tsx
+
 import { useState } from 'react';
+// Bu import'ların sizin "ui" klasörünüzden geldiğini varsayıyorum.
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Label } from './ui/label';
 
+// GÜNCELLENMİŞ INTERFACE: actionUrl prop'u eklendi
 interface ContactFormProps {
   fields: Array<{
     name: string;
@@ -13,9 +17,12 @@ interface ContactFormProps {
   }>;
   title?: string;
   description?: string;
+  // 👈 YENİ VE KRİTİK PROP
+  actionUrl: string;{"https://formspree.io/f/xqagazky"}
 }
 
-export function ContactForm({ fields, title, description }: ContactFormProps) {
+// actionUrl prop'u destructure edilerek alındı
+export function ContactForm({ fields, title, description, actionUrl }: ContactFormProps) {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
@@ -25,7 +32,8 @@ export function ContactForm({ fields, title, description }: ContactFormProps) {
     setError(false);
 
     try {
-      const response = await fetch("https://formspree.io/f/xqagazky", {
+      // 👈 GÜNCELLEME: Sabit URL yerine actionUrl prop'u kullanılıyor
+      const response = await fetch(actionUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(formData),
@@ -34,6 +42,7 @@ export function ContactForm({ fields, title, description }: ContactFormProps) {
       if (response.ok) {
         console.log("Form sent:", formData);
         setSubmitted(true);
+        // Form gönderildikten sonra inputları temizle
         setFormData({});
         setTimeout(() => setSubmitted(false), 4000);
       } else {

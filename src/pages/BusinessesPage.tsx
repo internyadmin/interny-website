@@ -1,5 +1,11 @@
+// C:\Users\Sait\Downloads\interny website\src\pages\BusinessesPage.tsx
+
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { ContactForm } from '../components/ContactForm';
+
+// LÜTFEN BU DEĞİŞKENİN İÇİNİ, FORMSPREE'DEN ALDIĞINIZ GERÇEK URL İLE DOLDURUN!
+// Örnek: "https://formspree.io/f/xyzaasdf"
+const BUSINESSES_FORMSPREE_URL = "https://formspree.io/f/xzzkzpdk"; 
 
 export function BusinessesPage() {
   const contactFields = [
@@ -65,7 +71,9 @@ export function BusinessesPage() {
             <h2 className="text-gray-900 mb-4">Connect with Us</h2>
             <p className="text-gray-600">Let's discuss how Interny can help your business find the perfect interns</p>
           </div>
-          <ContactForm fields={contactFields} />
+          {/* SADECE BURAYI DEĞİŞTİRDİK/EKLEDİK */}
+          <ContactForm fields={contactFields} actionUrl={BUSINESSES_FORMSPREE_URL} />
+          {/* ---------------------------------- */}
         </div>
       </section>
     </div>
